@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L O T T O</title>
+
+    <style>
+        *{margin: 0; padding: 0;}
+        body{
+            background-color: #ddd; 
+            font-family: pretendard;
+            font-weight: 300;
+        }
+
+        .wrap{
+            background-color: #fff;
+            width: 350px;
+            height: 450px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            box-sizing: border-box;
+            padding-top: 40px;
+            padding-right: 20px;
+            box-shadow: 5px 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .wrap:after{
+            content: '';
+            width: 20px;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: rgb(255,223,243);
+        }
+
+        .tit{
+            padding: 0 50px;
+        }
+
+        .tit p{
+            font-size: 12px;
+        }
+        h1{
+            font-size: 20px;
+        }
+        h1 span{
+            font-size: 18px;
+            display: block;
+        }
+        h1 strong{
+            font-size: 50px;
+            font-weight: bold;
+            line-height: 40px;
+        }
+        .tit p:last-child{
+            text-align: center;
+            font-size: 18px;
+            margin-top: 5px;
+        }
+        .tit .count{
+            letter-spacing: 2px;
+        }
+        .dates{
+            font-size: 14px;
+            letter-spacing: 2px;
+            margin: 10px 20px;
+            border-bottom: 1px dashed #333;
+            padding-bottom: 10px;
+        }
+        .numbers{
+            margin: 0 20px;
+            border-bottom: 1px dashed #333;
+        }
+        .numbers p{
+            margin-bottom: 5px;
+        }
+        .numbers strong{
+            letter-spacing: 4px;
+            width: 25%;
+        }
+        .numbers span{
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .numbers p{
+            display: flex;
+            justify-content: space-between;
+        }
+        .numbers .printNum{
+            width: 70%;
+            display: flex;
+            justify-content: space-between;
+        }
+        .prices{
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px 0 30px;
+            margin-top: 10px;
+            letter-spacing: 3px;
+        }
+        .prices span:last-child{
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    
+
+<div class="wrap">
+    <div class="tit">
+        <p>『절반의 행운, 절반의 기부』</p>
+        <h1>
+            <span>나눔</span>
+            <strong>Lotto</strong>6/45
+        </h1>
+        <p>제 <span class="count"></span> 회</p>
+    </div><!--tit-->
+
+    <div class="dates">
+        <div class="date1">
+            <strong>발 행 일 : </strong>
+            <span class="printDate1"></span>
+        </div><!--date1-->
+
+        <div class="date2">
+            <strong>추 첨 일 : </strong>
+            <span class="printDate2"></span>
+        </div><!--date2-->
+
+    </div><!--dates-->        
+
+        <div class="numbers">
+            <p class="num aNum">
+                <strong>A 자 동</strong>
+                <span class="printNum printNumA"></span>
+            </p><!--aNum-->
+
+            <p class="num bNum">
+                <strong>B 자 동</strong>
+                <span class="printNum printNumB"></span>
+            </p><!--bNum-->
+
+            <p class="num cNum">
+                <strong>C 자 동</strong>
+                <span class="printNum printNumC"></span>
+            </p><!--cNum-->
+
+            <p class="num dNum">
+                <strong>D 자 동</strong>
+                <span class="printNum printNumD"></span>
+            </p><!--dNum-->
+
+            <p class="num eNum">
+                <strong>E 자 동</strong>
+                <span class="printNum printNumE"></span>
+            </p><!--eNum-->
+            
+        </div><!--numbers-->
+
+        <div class="prices">
+            <span>금 액</span>
+            <span>￦5,000</span>
+        </div>
+    
+</div><!--wrap-->
+
+<script src="js/jquery-3.6.0.min.js"></script>
+<script>
+
+    function makeLotto(yaho){    
+
+    let lotto = [];
+    let n = 0
+    //Math.random() 1미만의 숫자를 17자리까지 랜덤으로 출력
+
+    //while()을 써서 증감을 할 경우에는 조건부로 증감을 할 수 있다
+    while(n<=5){
+        //for(let i = 0; i<=5; i++){
+    let num = Math.random()*45 +1;
+        num = parseInt(num); //parseInt()자연수 아래 다 제거
+        
+        if(lotto.indexOf(num) == -1){
+            if(num < 10){
+                num = `0${num}`
+            }
+            lotto.push(num);
+            n++;
+        }
+    }
+    lotto.sort(function(a,b){
+        return a - b;
+    });
+    console.log(lotto);
+    for(let i = 0; i<lotto.length; i++){
+        $(yaho).append(`<span>${lotto[i]}</span>`)
+    }
+
+}//function Make Lotto
+
+/*
+makeLotto('.printNumA');
+makeLotto('.printNumB');
+makeLotto('.printNumC');
+makeLotto('.printNumD');
+makeLotto('.printNumE');
+*/
+let selectors = ['A','B','C','D','E'];
+for(let i = 0; i<selectors.length; i++){
+    makeLotto(`.printNum${selectors[i]}`);
+}
+    /*$('.printNumA').append(`<span>${lotto[0]}</span>`)
+    $('.printNumA').append(`<span>${lotto[1]}</span>`)
+    $('.printNumA').append(`<span>${lotto[2]}</span>`)
+    $('.printNumA').append(`<span>${lotto[3]}</span>`)
+    $('.printNumA').append(`<span>${lotto[4]}</span>`)
+    $('.printNumA').append(`<span>${lotto[5]}</span>`)*/
+    //Array.sort() 알파벳순으로 배열내를 정렬
+setInterval(function(){
+let now = new Date();
+
+let nowYear = now.getFullYear(),
+    nowMon = now.getMonth(),
+    nowDate = now.getDate(),
+    nowDay = now.getDay(),
+    nowHr = now.getHours(),
+    nowMin = now.getMinutes(),
+    nowSec = now.getSeconds();
+
+let days = ['일','월','화','수','목','금','토'];
+
+    if(nowHr< 10){
+        nowHr = `0${nowHr}`;
+    }
+    if(nowMin<10){
+        nowMin = `0${nowMin}`;
+    }
+    if(nowSec<10){
+        nowSec = `0${nowSec}`;
+    }
+
+    $('.printDate1').text(`${nowYear}/${nowMon+1}/${nowDate} (${days[nowDay]}) ${nowHr} : ${nowMin} : ${nowSec}`)
+    $('.printDate2').text(`${nowYear}/${nowMon+1}/${nowDate + (6 - nowDay)} (토) 20 : 45 : 00`)
+    
+
+    /*
+    o_day=new Date('December 07 2012'); 
+    today=new Date(); 
+    start=o_day.getTime(); 
+    noww=today.getTime(); 
+    hday=Math.ceil((now-start)/24/60/60/1000);
+    */
+});
+
+
+let getyear = 2002;
+        let getmonth = 12;
+        let getday = 07
+
+
+        let dat1 = new Date();
+        let dat2 = new Date(getyear,getmonth-1,getday);
+
+        let diff = dat2 - dat1;
+
+        let currDay = 24* 60 * 60 * 1000;
+
+        let day = parseInt(diff/currDay);
+
+        let dday = day * -1;
+
+        let week = dday/7;
+        let wek = Math.ceil(week);
+        $('.count').text(wek+1);
+</script>
+    
+</body>
+</html>
